@@ -16,27 +16,33 @@ import java.util.Scanner;
 @Component
 public class TextAppViewImpl implements TextAppView {
     @Value("${default.width}")
-    private int DEFAULT_FRAME_WIDTH;
+    private int defaultFrameWidth;
     @Value("${default.height}")
-    private int DEFAULT_FRAME_HEIGHT;
+    private int defaultFrameHeight;
     @Value("${location.x}")
-    private int LOCATION_X;
+    private int locationX;
     @Value("${location.y}")
-    private int LOCATION_Y;
+    private int locationY;
     @Value("${pref.size.width}")
-    private int PREF_SIZE_WIDTH;
+    private int prefSizeWidth;
     @Value("${pref.size.height}")
-    private int PREF_SIZE_HEIGHT;
+    private int prefSizeHeight;
+    @Value("${scroll.step}")
+    private int scrollStep;
     private static final String CONTENT_TYPE = "text/html";
     private static final String TITLE = "Kofax test task";
+    private static final int UP_KEY_CODE = 38;
+    private static final int DOWN_KEY_CODE = 40;
+
+    private JScrollPane jScrollPane;
 
     @Override
     public void viewText(Text text) {
         JFrame jFrame = new JFrame();
         jFrame.setVisible(true);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
-        jFrame.setLocation(LOCATION_X, LOCATION_Y);
+        jFrame.setSize(defaultFrameWidth, defaultFrameHeight);
+        jFrame.setLocation(locationX, locationY);
         jFrame.setTitle(TITLE);
         JPanel jPanel = new JPanel();
         jPanel.setBackground(Color.BLUE);
@@ -44,22 +50,29 @@ public class TextAppViewImpl implements TextAppView {
         jEditorPane.setContentType(CONTENT_TYPE);
         jEditorPane.setEditable(false);
         jEditorPane.setText(text.getValue());
-        JScrollPane jScrollPane = new JScrollPane(jEditorPane);
-        jScrollPane.setPreferredSize(new Dimension(PREF_SIZE_WIDTH, PREF_SIZE_HEIGHT));
+        jScrollPane = new JScrollPane(jEditorPane);
+        jScrollPane.setPreferredSize(new Dimension(prefSizeWidth, prefSizeHeight));
+        createKeyListener(jEditorPane);
+        jPanel.add(jScrollPane);
+        jFrame.add(jPanel);
+        jPanel.revalidate();
+    }
+
+    public void createKeyListener(JEditorPane jEditorPane) {
         jEditorPane.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == DOWN_KEY_CODE) {
+                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() + scrollStep);
+                }
+                if (e.getKeyCode() == UP_KEY_CODE) {
+                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() - scrollStep);
+                }
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == 40) {
-                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() + 20);
-                }
-                if (e.getKeyCode() == 38) {
-                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() - 20);
-                }
+            public void keyTyped(KeyEvent e) {
+
             }
 
             @Override
@@ -67,12 +80,6 @@ public class TextAppViewImpl implements TextAppView {
 
             }
         });
-//        InputMap inputMap = jScrollPane.getVerticalScrollBar().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-//        inputMap.put(KeyStroke.getKeyStroke("DOWN"), "positiveUnitIncrement");
-//        inputMap.put(KeyStroke.getKeyStroke("UP"), "negativeUnitIncrement");
-        jPanel.add(jScrollPane);
-        jFrame.add(jPanel);
-        jPanel.revalidate();
     }
 
     @Override

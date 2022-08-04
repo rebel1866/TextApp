@@ -17,10 +17,12 @@ public class TextAppLogicImpl implements TextAppLogic {
     private TextAppDao textAppDao;
     @Value("${big.font.size}")
     private String BIG_FONT_SIZE;
+    @Value("${small.font.size}")
+    private String SMALL_FONT_SIZE;
     private static final String HTML_OPEN_TAG = "<html>";
     private static final String HTML_CLOSE_TAG = "</html>";
     private static final String LINE_BREAK = "<br>";
-    private static String SPAN_OPEN_TAG = "<span style=\"font-size:%spx; word-break: break-all\">";
+    private static final String SPAN_OPEN_TAG = "<span style=\"font-size:%spx\">";
     private static final String SPAN_CLOSE_TAG = "</span>";
     private static final String SPACE = " ";
 
@@ -38,7 +40,6 @@ public class TextAppLogicImpl implements TextAppLogic {
         targetText.append(HTML_OPEN_TAG);
         sourceText = sourceText.replaceAll("\n", LINE_BREAK);
         List<String> words = Arrays.stream(sourceText.split(SPACE)).toList();
-        SPAN_OPEN_TAG = String.format(SPAN_OPEN_TAG, BIG_FONT_SIZE);
         appendWords(words, targetText);
         targetText.append(HTML_CLOSE_TAG);
         return new Text(targetText.toString());
@@ -46,28 +47,28 @@ public class TextAppLogicImpl implements TextAppLogic {
 
     public void appendWords(List<String> words, StringBuilder targetText) {
         boolean isLowerFont = true;
+        String spanOpenForBigFont = String.format(SPAN_OPEN_TAG, BIG_FONT_SIZE);
+        String spanOpenForSmallFont = String.format(SPAN_OPEN_TAG, SMALL_FONT_SIZE);
         for (int i = 0; i < words.size(); i = i + 2) {
             if (isLowerFont) {
-                targetText.append(words.get(i));
-                targetText.append(SPACE);
-                appendSecond(words, i, targetText);
+                wrapSpan(spanOpenForBigFont, words, i, targetText);
                 isLowerFont = false;
             } else {
-                targetText.append(SPAN_OPEN_TAG);
-                targetText.append(words.get(i));
-                targetText.append(SPACE);
-                appendSecond(words, i, targetText);
-                targetText.append(SPAN_CLOSE_TAG);
+                wrapSpan(spanOpenForSmallFont, words, i, targetText);
                 isLowerFont = true;
             }
             targetText.append(SPACE);
         }
     }
 
-    public void appendSecond(List<String> words, int i, StringBuilder targetText) {
+    public void wrapSpan(String spanOpenForSmallFont, List<String> words, int i, StringBuilder targetText) {
+        targetText.append(spanOpenForSmallFont);
+        targetText.append(words.get(i));
+        targetText.append(SPACE);
         if (i + 1 != words.size()) {
             targetText.append(words.get(i + 1));
         }
+        targetText.append(SPAN_CLOSE_TAG);
     }
 }
 
