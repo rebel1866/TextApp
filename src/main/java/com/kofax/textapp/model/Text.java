@@ -1,9 +1,9 @@
 package com.kofax.textapp.model;
 
-public class TextModel {
+public class Text {
     private String value;
 
-    public TextModel(String value) {
+    public Text(String value) {
         this.value = value;
     }
 

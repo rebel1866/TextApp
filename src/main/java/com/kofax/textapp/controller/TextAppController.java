@@ -1,7 +1,7 @@
 package com.kofax.textapp.controller;
 
 import com.kofax.textapp.logic.TextAppLogic;
-import com.kofax.textapp.model.TextModel;
+import com.kofax.textapp.model.Text;
 import com.kofax.textapp.view.TextAppView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +22,9 @@ public class TextAppController {
     }
 
     public void initApp() {
-        String path = textAppView.inputPathToFile();
-        TextModel textModel = textAppLogic.findText(path);
-        TextModel formattedTextModel = textAppLogic.formatText(textModel);
-        textAppView.viewText(formattedTextModel);
+        textAppView.printMessage("Enter path to file:");
+        String path = textAppView.inputFilePath();
+        Text text = textAppLogic.getFormattedText(path);
+        textAppView.viewText(text);
     }
 }

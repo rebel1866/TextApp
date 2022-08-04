@@ -1,12 +1,8 @@
 package com.kofax.textapp.logic;
 
 
-import com.kofax.textapp.model.TextModel;
+import com.kofax.textapp.model.Text;
 
 public interface TextAppLogic {
-
-
-    TextModel findText(String path);
-
-    TextModel formatText(TextModel textModel);
+    Text getFormattedText(String path);
 }

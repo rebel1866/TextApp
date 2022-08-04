@@ -1,10 +1,12 @@
 package com.kofax.textapp.view;
 
 
-import com.kofax.textapp.model.TextModel;
+import com.kofax.textapp.model.Text;
 
 public interface TextAppView {
-    void viewText(TextModel text);
+    void viewText(Text text);
 
-    String inputPathToFile();
+    String inputFilePath();
+
+    void printMessage(String s);
 }

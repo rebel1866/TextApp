@@ -1,6 +1,6 @@
 package com.kofax.textapp.view.impl;
 
-import com.kofax.textapp.model.TextModel;
+import com.kofax.textapp.model.Text;
 import com.kofax.textapp.view.TextAppView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Scanner;
 
 @Component
@@ -29,7 +31,7 @@ public class TextAppViewImpl implements TextAppView {
     private static final String TITLE = "Kofax test task";
 
     @Override
-    public void viewText(TextModel text) {
+    public void viewText(Text text) {
         JFrame jFrame = new JFrame();
         jFrame.setVisible(true);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,15 +46,44 @@ public class TextAppViewImpl implements TextAppView {
         jEditorPane.setText(text.getValue());
         JScrollPane jScrollPane = new JScrollPane(jEditorPane);
         jScrollPane.setPreferredSize(new Dimension(PREF_SIZE_WIDTH, PREF_SIZE_HEIGHT));
+        jEditorPane.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == 40) {
+                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() + 20);
+                }
+                if (e.getKeyCode() == 38) {
+                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() - 20);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+//        InputMap inputMap = jScrollPane.getVerticalScrollBar().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+//        inputMap.put(KeyStroke.getKeyStroke("DOWN"), "positiveUnitIncrement");
+//        inputMap.put(KeyStroke.getKeyStroke("UP"), "negativeUnitIncrement");
         jPanel.add(jScrollPane);
         jFrame.add(jPanel);
         jPanel.revalidate();
     }
 
     @Override
-    public String inputPathToFile() {
+    public void printMessage(String message) {
+        Logger logger = LogManager.getLogger();
+        logger.info("\n" + message);
+    }
+
+    @Override
+    public String inputFilePath() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter path to file:");
         return scanner.nextLine();
     }
 }
