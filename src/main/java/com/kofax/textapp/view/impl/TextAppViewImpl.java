@@ -1,7 +1,7 @@
 package com.kofax.textapp.view.impl;
 
 import com.kofax.textapp.model.Text;
-import com.kofax.textapp.view.TextAppView;
+import com.kofax.textapp.view.abstraction.TextAppView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Scanner;
 
 @Component
@@ -59,25 +59,16 @@ public class TextAppViewImpl implements TextAppView {
     }
 
     public void createKeyListener(JEditorPane jEditorPane) {
-        jEditorPane.addKeyListener(new KeyListener() {
+        jEditorPane.addKeyListener(new KeyAdapter() {
+            JScrollBar scrollBar = jScrollPane.getVerticalScrollBar();
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == DOWN_KEY_CODE) {
-                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() + scrollStep);
+                    scrollBar.setValue(scrollBar.getValue() + scrollStep);
                 }
                 if (e.getKeyCode() == UP_KEY_CODE) {
-                    jScrollPane.getVerticalScrollBar().setValue(jScrollPane.getVerticalScrollBar().getValue() - scrollStep);
+                    scrollBar.setValue(scrollBar.getValue() - scrollStep);
                 }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
             }
         });
     }

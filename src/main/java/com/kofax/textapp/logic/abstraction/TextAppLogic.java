@@ -1,4 +1,4 @@
-package com.kofax.textapp.logic;
+package com.kofax.textapp.logic.abstraction;
 
 
 import com.kofax.textapp.model.Text;

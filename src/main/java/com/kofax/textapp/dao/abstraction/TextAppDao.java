@@ -1,4 +1,4 @@
-package com.kofax.textapp.dao;
+package com.kofax.textapp.dao.abstraction;
 
 public interface TextAppDao {
     String findText(String path);

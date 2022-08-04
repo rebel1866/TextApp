@@ -1,8 +1,8 @@
 package com.kofax.textapp.logic.impl;
 
 
-import com.kofax.textapp.dao.TextAppDao;
-import com.kofax.textapp.logic.TextAppLogic;
+import com.kofax.textapp.dao.abstraction.TextAppDao;
+import com.kofax.textapp.logic.abstraction.TextAppLogic;
 import com.kofax.textapp.model.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,13 +16,16 @@ public class TextAppLogicImpl implements TextAppLogic {
 
     private TextAppDao textAppDao;
     @Value("${big.font.size}")
-    private String BIG_FONT_SIZE;
+    private String bigFontSize;
     @Value("${small.font.size}")
-    private String SMALL_FONT_SIZE;
+    private String smallFontSize;
+    @Value("${font}")
+    private String font;
+
     private static final String HTML_OPEN_TAG = "<html>";
     private static final String HTML_CLOSE_TAG = "</html>";
     private static final String LINE_BREAK = "<br>";
-    private static final String SPAN_OPEN_TAG = "<span style=\"font-size:%spx\">";
+    private static final String SPAN_OPEN_TAG = "<span style=\"font-size:%spx; font-family:%s\">";
     private static final String SPAN_CLOSE_TAG = "</span>";
     private static final String SPACE = " ";
 
@@ -47,8 +50,8 @@ public class TextAppLogicImpl implements TextAppLogic {
 
     public void appendWords(List<String> words, StringBuilder targetText) {
         boolean isLowerFont = true;
-        String spanOpenForBigFont = String.format(SPAN_OPEN_TAG, BIG_FONT_SIZE);
-        String spanOpenForSmallFont = String.format(SPAN_OPEN_TAG, SMALL_FONT_SIZE);
+        String spanOpenForBigFont = String.format(SPAN_OPEN_TAG, bigFontSize, font);
+        String spanOpenForSmallFont = String.format(SPAN_OPEN_TAG, smallFontSize, font);
         for (int i = 0; i < words.size(); i = i + 2) {
             if (isLowerFont) {
                 wrapSpan(spanOpenForBigFont, words, i, targetText);

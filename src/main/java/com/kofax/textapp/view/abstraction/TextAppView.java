@@ -1,4 +1,4 @@
-package com.kofax.textapp.view;
+package com.kofax.textapp.view.abstraction;
 
 
 import com.kofax.textapp.model.Text;

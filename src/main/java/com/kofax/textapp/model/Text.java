@@ -2,7 +2,6 @@ package com.kofax.textapp.model;
 
 public class Text {
     private String value;
-
     public Text(String value) {
         this.value = value;
     }

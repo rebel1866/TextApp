@@ -1,8 +1,8 @@
 package com.kofax.textapp.controller;
 
-import com.kofax.textapp.logic.TextAppLogic;
+import com.kofax.textapp.logic.abstraction.TextAppLogic;
 import com.kofax.textapp.model.Text;
-import com.kofax.textapp.view.TextAppView;
+import com.kofax.textapp.view.abstraction.TextAppView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

@@ -1,6 +1,6 @@
 package com.kofax.textapp.dao.impl;
 
-import com.kofax.textapp.dao.TextAppDao;
+import com.kofax.textapp.dao.abstraction.TextAppDao;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
