@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.util.Scanner;
 
 @Component
@@ -61,6 +63,7 @@ public class TextAppViewImpl implements TextAppView {
     public void createKeyListener(JEditorPane jEditorPane) {
         jEditorPane.addKeyListener(new KeyAdapter() {
             JScrollBar scrollBar = jScrollPane.getVerticalScrollBar();
+
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == DOWN_KEY_CODE) {
