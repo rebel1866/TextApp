@@ -25,6 +25,6 @@ public class TextAppController {
         textAppView.printMessage("Enter path to file:");
         String path = textAppView.inputFilePath();
         Text text = textAppLogic.getFormattedText(path);
-        textAppView.viewText(text);
+        textAppView.viewTextWindow(text);
     }
 }

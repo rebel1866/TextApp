@@ -33,34 +33,39 @@ public class TextAppViewImpl implements TextAppView {
     private static final String TITLE = "Kofax Test Task";
     private static final int UP_KEY_CODE = 38;
     private static final int DOWN_KEY_CODE = 40;
-
+    private final JFrame jFrame = new JFrame();
     private JScrollPane jScrollPane;
+    private final JPanel jPanel = new JPanel();
+    private final JEditorPane jEditorPane = new JEditorPane();
 
     @Override
-    public void viewText(Text text) {
-        JFrame jFrame = new JFrame();
-        jFrame.setVisible(true);
+    public void initGUI() {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setSize(defaultFrameWidth, defaultFrameHeight);
         jFrame.setLocation(locationX, locationY);
         jFrame.setTitle(TITLE);
-        JPanel jPanel = new JPanel();
         jPanel.setBackground(Color.BLUE);
-        JEditorPane jEditorPane = new JEditorPane();
         jEditorPane.setContentType(CONTENT_TYPE);
         jEditorPane.setEditable(false);
-        jEditorPane.setText(text.getValue());
         jScrollPane = new JScrollPane(jEditorPane);
         jScrollPane.setPreferredSize(new Dimension(prefSizeWidth, prefSizeHeight));
         createKeyListener(jEditorPane);
         jPanel.add(jScrollPane);
         jFrame.add(jPanel);
+    }
+
+
+    @Override
+    public void viewTextWindow(Text text) {
+        jFrame.setVisible(true);
+        jEditorPane.setText(text.getValue());
         jPanel.revalidate();
     }
 
     public void createKeyListener(JEditorPane jEditorPane) {
         jEditorPane.addKeyListener(new KeyAdapter() {
             final JScrollBar scrollBar = jScrollPane.getVerticalScrollBar();
+
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == DOWN_KEY_CODE) {
