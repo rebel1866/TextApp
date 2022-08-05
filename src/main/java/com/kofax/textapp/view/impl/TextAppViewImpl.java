@@ -60,8 +60,7 @@ public class TextAppViewImpl implements TextAppView {
 
     public void createKeyListener(JEditorPane jEditorPane) {
         jEditorPane.addKeyListener(new KeyAdapter() {
-            JScrollBar scrollBar = jScrollPane.getVerticalScrollBar();
-
+            final JScrollBar scrollBar = jScrollPane.getVerticalScrollBar();
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == DOWN_KEY_CODE) {

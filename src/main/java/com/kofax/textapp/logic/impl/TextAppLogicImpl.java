@@ -1,6 +1,5 @@
 package com.kofax.textapp.logic.impl;
 
-
 import com.kofax.textapp.dao.abstraction.TextAppDao;
 import com.kofax.textapp.logic.abstraction.TextAppLogic;
 import com.kofax.textapp.model.Text;
