@@ -32,7 +32,7 @@ public class TextAppViewImpl implements TextAppView {
     @Value("${scroll.step}")
     private int scrollStep;
     private static final String CONTENT_TYPE = "text/html";
-    private static final String TITLE = "Kofax test task";
+    private static final String TITLE = "Kofax Test Task";
     private static final int UP_KEY_CODE = 38;
     private static final int DOWN_KEY_CODE = 40;
 
